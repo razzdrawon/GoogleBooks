@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">GoogleBooks</string>
+
+    <string name="title">Book Title</string>
+    <string name="publish_date">2018 - Sptember - 14</string>
+    <string name="authors">Authors: </string>
+    <string name="description">Description</string>
+
+</resources>

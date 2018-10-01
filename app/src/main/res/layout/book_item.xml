@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/imgThumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="80sp"
+        android:layout_margin="5sp"
+        android:src="@mipmap/ic_launcher">
+
+    </ImageView>
+
+    <LinearLayout
+        android:id="@+id/llBookItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/title_size"
+            android:textStyle="bold"
+            android:text="@string/title"/>
+
+        <TextView
+            android:id="@+id/tvPublishDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/date_size"
+            android:textStyle="bold"
+            android:text="@string/publish_date"/>
+    </LinearLayout>
+
+</LinearLayout>
