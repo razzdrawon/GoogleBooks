@@ -1,5 +1,7 @@
 package com.razzdrawon.googlebooks.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.razzdrawon.googlebooks.R;
+import com.razzdrawon.googlebooks.activity.BookDetailsActivity;
 import com.razzdrawon.googlebooks.model.Book;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -17,39 +20,37 @@ import java.util.List;
 
 public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.MyViewHolder> {
 
-    public interface OnItemClickListener {
-        void onItemClick(Book item);
-    }
+    public static final String BOOK_ID = "book_id";
 
     public List<Book> mBooks;
-    private final OnItemClickListener mListener;
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public BookItemAdapter(List<Book> books, OnItemClickListener listener) {
+    public BookItemAdapter(List<Book> books) {
         this.mBooks = books;
-        this.mListener = listener;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
     public BookItemAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_item, parent, false);
-        MyViewHolder vh = new MyViewHolder(v);
-        return vh;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_item, parent, false);
+        return new MyViewHolder(view);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-
-        holder.bind(mBooks.get(position), mListener);
+        holder.bind(mBooks.get(position));
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return mBooks.size();
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(Book item);
     }
 
     // Provide a reference to the views for each data item
@@ -62,9 +63,9 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.MyView
         TextView title;
         TextView publishedDate;
 
-        public MyViewHolder(View v) {
-            super(v);
-            mView = v;
+        public MyViewHolder(View view) {
+            super(view);
+            mView = view;
 
             thumbnail = (ImageView)mView.findViewById(R.id.imgThumbnail);
             title = (TextView)mView.findViewById(R.id.tvTitle);
@@ -72,7 +73,9 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.MyView
 
         }
 
-        public void bind(final Book book, final OnItemClickListener listener) {
+        public void bind(final Book book) {
+
+            final Context context = itemView.getContext();
 
             if(book.getVolumeInfo() != null){
                 title.setText(book.getVolumeInfo().getTitle());
@@ -85,10 +88,17 @@ public class BookItemAdapter extends RecyclerView.Adapter<BookItemAdapter.MyView
                 }
                 itemView.setOnClickListener(new View.OnClickListener() {
                     @Override public void onClick(View v) {
-                        listener.onItemClick(book);
+                        Intent intent = new Intent(context, BookDetailsActivity.class);
+                        intent.putExtra(BOOK_ID, book.getId());
+                        context.startActivity(intent);
                     }
                 });
             }
         }
+    }
+
+    public void updateBooks(List<Book> books){
+        this.mBooks.addAll(books);
+        notifyDataSetChanged();
     }
 }
