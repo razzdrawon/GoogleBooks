@@ -5,9 +5,9 @@ import com.razzdrawon.googlebooks.services.GoogleBooksService;
 import com.razzdrawon.googlebooks.services.RetrofitClient;
 import com.razzdrawon.googlebooks.view.MainActivityView;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class MainActivityPresenter {
 
@@ -21,33 +21,28 @@ public class MainActivityPresenter {
 
     public void getBoolList(String query, Integer startIndex, Integer maxResults) {
         view.showWait();
-        service.getBooks(query, startIndex, maxResults).enqueue(new Callback<BookResponse>() {
-            @Override
-            public void onResponse(Call<BookResponse> call, Response<BookResponse> response) {
 
-                if (response.isSuccessful()) {
-                    view.removeWait();
-                    view.getBookResponseSuccess(response.body());
-                }
-                else {
-                    // error case
-                    switch (response.code()) {
-                        default:
-                            view.removeWait();
-                            view.onAPIFailure();
-                            break;
+        service.getBooks(query, startIndex, maxResults)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<BookResponse>() {
+                    @Override
+                    public void onCompleted() {
+
                     }
-                }
-            }
-            @Override
-            public void onFailure(Call<BookResponse> call, Throwable t) {
-                view.removeWait();
-                view.onAPIFailure();
-            }
-        });
 
+                    @Override
+                    public void onError(Throwable e) {
+                        view.removeWait();
+                        view.onAPIFailure();
+                    }
+
+                    @Override
+                    public void onNext(BookResponse bookResponse) {
+                        view.removeWait();
+                        view.getBookResponseSuccess(bookResponse);
+
+                    }
+                });
     }
-
-
-
 }

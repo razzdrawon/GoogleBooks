@@ -61,7 +61,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        service.getBookById(bookId).enqueue(new Callback<Book>() {
+        /*service.getBookById(bookId).enqueue(new Callback<Book>() {
             @Override
             public void onResponse(Call<Book> call, Response<Book> response) {
                 if (response.isSuccessful()) {
@@ -113,7 +113,7 @@ public class BookDetailsActivity extends AppCompatActivity {
             public void onFailure(Call<Book> call, Throwable t) {
                 Toast.makeText(BookDetailsActivity.this, "Network failure. Inform the user and possibly retry", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
     }
 }
