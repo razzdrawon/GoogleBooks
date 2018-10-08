@@ -54,10 +54,6 @@ public class BookDetailsActivity extends AppCompatActivity {
         tvDescription = findViewById(R.id.tvDescription);
         tvPublishedDate = findViewById(R.id.tvPublishDate);
 
-
-
-        //Toast.makeText(BookDetailsActivity.this, "Item:  " + bookId, Toast.LENGTH_LONG).show();
-
         getBookDetails(bookId);
     }
 

@@ -5,5 +5,6 @@
     <string name="publish_date">2018 - Sptember - 14</string>
     <string name="authors">Authors: </string>
     <string name="description">Description</string>
+    <string name="no_books">Not able to get books.</string>
 
 </resources>

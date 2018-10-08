@@ -1,9 +1,5 @@
 package com.razzdrawon.googlebooks.presenter;
 
-import android.view.View;
-import android.widget.Toast;
-
-import com.razzdrawon.googlebooks.activity.MainActivity;
 import com.razzdrawon.googlebooks.model.BookResponse;
 import com.razzdrawon.googlebooks.services.GoogleBooksService;
 import com.razzdrawon.googlebooks.services.RetrofitClient;
@@ -38,7 +34,7 @@ public class MainActivityPresenter {
                     switch (response.code()) {
                         default:
                             view.removeWait();
-                            view.onFailure(response.errorBody().toString());
+                            view.onAPIFailure();
                             break;
                     }
                 }
@@ -46,13 +42,9 @@ public class MainActivityPresenter {
             @Override
             public void onFailure(Call<BookResponse> call, Throwable t) {
                 view.removeWait();
-                view.onFailure(t.getMessage());
+                view.onAPIFailure();
             }
         });
-
-    }
-
-    public void onStop() {
 
     }
 

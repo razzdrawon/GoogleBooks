@@ -8,7 +8,7 @@ public interface MainActivityView {
 
     void removeWait();
 
-    void onFailure(String appErrorMessage);
+    void onAPIFailure();
 
     void getBookResponseSuccess(BookResponse bookListResponse);
 
