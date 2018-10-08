@@ -1,9 +1,13 @@
 package com.razzdrawon.googlebooks.presenter;
 
+import android.content.Context;
+
 import com.razzdrawon.googlebooks.model.BookResponse;
 import com.razzdrawon.googlebooks.services.GoogleBooksService;
 import com.razzdrawon.googlebooks.services.RetrofitClient;
 import com.razzdrawon.googlebooks.view.MainActivityView;
+
+import javax.inject.Inject;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -12,11 +16,12 @@ import rx.schedulers.Schedulers;
 public class MainActivityPresenter {
 
     private final MainActivityView view;
+
     public GoogleBooksService service;
 
-    public MainActivityPresenter(MainActivityView view) {
+    public MainActivityPresenter(MainActivityView view, GoogleBooksService service) {
         this.view = view;
-        service = RetrofitClient.getInstance().getService();
+        this.service = service;
     }
 
     public void getBoolList(String query, Integer startIndex, Integer maxResults) {

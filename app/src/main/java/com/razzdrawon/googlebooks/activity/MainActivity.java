@@ -1,37 +1,37 @@
 package com.razzdrawon.googlebooks.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.razzdrawon.googlebooks.R;
 import com.razzdrawon.googlebooks.adapter.BookItemAdapter;
-import com.razzdrawon.googlebooks.model.Book;
 import com.razzdrawon.googlebooks.model.BookResponse;
 import com.razzdrawon.googlebooks.presenter.MainActivityPresenter;
+import com.razzdrawon.googlebooks.services.GoogleBooksService;
 import com.razzdrawon.googlebooks.view.MainActivityView;
+
+import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity implements MainActivityView {
 
-    //RecyclerViewVars
-    private RecyclerView mRecyclerView;
-    private BookItemAdapter mAdapter;
     public static final Integer COLUMNS_NBR = 1;
-    private GridLayoutManager mLayoutManager = new GridLayoutManager(this, COLUMNS_NBR);
-
+    @Inject
+    public GoogleBooksService service;
     //Endless book list
     ProgressBar progressBar;
     Boolean isScrolling = false;
     int currentItems, totalItems, scrollOutItems;
-
     TextView failureMessage;
-
     MainActivityPresenter presenter;
+    //RecyclerViewVars
+    private RecyclerView mRecyclerView;
+    private BookItemAdapter mAdapter;
+    private GridLayoutManager mLayoutManager = new GridLayoutManager(this, COLUMNS_NBR);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityView 
 
         getViews();
 
-        presenter = new MainActivityPresenter(this);
+
+
+        presenter = new MainActivityPresenter(this, service);
         presenter.getBoolList("android", 0, 15);
 
         mAdapter = new BookItemAdapter();
@@ -82,10 +84,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityView 
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
-            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL){
+            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
                 isScrolling = true;
             }
         }
+
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView 
             totalItems = mLayoutManager.getItemCount();
             scrollOutItems = mLayoutManager.findFirstCompletelyVisibleItemPosition();
 
-            if(isScrolling && (currentItems + scrollOutItems == totalItems)) {
+            if (isScrolling && (currentItems + scrollOutItems == totalItems)) {
                 isScrolling = false;
                 presenter.getBoolList("android", totalItems, 5);
             }
