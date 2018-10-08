@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.razzdrawon.googlebooks.R;
+import com.razzdrawon.googlebooks.adapter.BookItemAdapter;
 import com.razzdrawon.googlebooks.model.Book;
 import com.razzdrawon.googlebooks.model.BookResponse;
 import com.razzdrawon.googlebooks.services.GoogleBooksService;
@@ -43,7 +44,7 @@ public class BookDetailsActivity extends AppCompatActivity {
         service = RetrofitClient.getInstance().getService();
 
         Intent intent = getIntent();
-        bookId = intent.getStringExtra(MainActivity.BOOK_ID);
+        bookId = intent.getStringExtra(BookItemAdapter.BOOK_ID);
 
 
         progressBar = (ProgressBar) findViewById(R.id.progressDetails);
@@ -52,10 +53,6 @@ public class BookDetailsActivity extends AppCompatActivity {
         tvAuthors = findViewById(R.id.tvAuthors);
         tvDescription = findViewById(R.id.tvDescription);
         tvPublishedDate = findViewById(R.id.tvPublishDate);
-
-
-
-        //Toast.makeText(BookDetailsActivity.this, "Item:  " + bookId, Toast.LENGTH_LONG).show();
 
         getBookDetails(bookId);
     }

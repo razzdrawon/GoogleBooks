@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private static RetrofitClient instance = null;
-    public static final String BASE_URL = "your_base_url";
+    public static final String BASE_URL = "https://www.googleapis.com/books/v1/";
 
     // Keep your services here, build them in buildRetrofit method later
     private GoogleBooksService service;
@@ -21,17 +21,15 @@ public class RetrofitClient {
 
     // Build retrofit once when creating a single instance
     private RetrofitClient() {
-        // Implement a method to build your retrofit
         buildRetrofit(BASE_URL);
     }
 
     private void buildRetrofit(String baseUrl) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://www.googleapis.com/books/v1/")
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();;
 
-        // Build your services once
         this.service = retrofit.create(GoogleBooksService.class);
     }
 
