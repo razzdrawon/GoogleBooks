@@ -5,48 +5,46 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.razzdrawon.googlebooks.R;
 import com.razzdrawon.googlebooks.adapter.BookItemAdapter;
 import com.razzdrawon.googlebooks.model.Book;
-import com.razzdrawon.googlebooks.model.BookResponse;
-import com.razzdrawon.googlebooks.services.GoogleBooksService;
-import com.razzdrawon.googlebooks.services.RetrofitClient;
+import com.razzdrawon.googlebooks.presenter.BookDetailsPresenter;
+import com.razzdrawon.googlebooks.view.BookDetailsView;
 import com.squareup.picasso.Picasso;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class BookDetailsActivity extends AppCompatActivity {
-
-    private Book book;
-    ProgressBar progressBar;
-    public GoogleBooksService service;
+public class BookDetailsActivity extends AppCompatActivity implements BookDetailsView {
 
     ImageView bookCover;
     TextView tvAuthors;
     TextView tvDescription;
     TextView tvPublishedDate;
+    TextView failureMessage;
+    LinearLayout bookDetailsLayout;
+    ProgressBar progressBar;
 
     String bookId;
-
+    BookDetailsPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_details);
 
-
-        service = RetrofitClient.getInstance().getService();
+        getViews();
 
         Intent intent = getIntent();
         bookId = intent.getStringExtra(BookItemAdapter.BOOK_ID);
 
+        presenter = new BookDetailsPresenter(this);
+        presenter.getBookDetails(bookId);
 
+    }
+
+    private void getViews() {
         progressBar = (ProgressBar) findViewById(R.id.progressDetails);
 
         bookCover = findViewById(R.id.imgBookCover);
@@ -54,66 +52,38 @@ public class BookDetailsActivity extends AppCompatActivity {
         tvDescription = findViewById(R.id.tvDescription);
         tvPublishedDate = findViewById(R.id.tvPublishDate);
 
-        getBookDetails(bookId);
+        failureMessage = (TextView) findViewById(R.id.failure_book_message);
+        bookDetailsLayout = (LinearLayout) findViewById(R.id.book_details_layout);
     }
 
-    public void getBookDetails(final String bookId) {
 
+    @Override
+    public void showWait() {
         progressBar.setVisibility(View.VISIBLE);
+    }
 
-        /*service.getBookById(bookId).enqueue(new Callback<Book>() {
-            @Override
-            public void onResponse(Call<Book> call, Response<Book> response) {
-                if (response.isSuccessful()) {
-                    book = response.body();
+    @Override
+    public void removeWait() {
+        progressBar.setVisibility(View.GONE);
+    }
 
-                    tvPublishedDate.setText(book.getVolumeInfo().getPublishedDate());
+    @Override
+    public void onAPIFailure() {
+        failureMessage.setVisibility(View.VISIBLE);
+        bookDetailsLayout.setVisibility(View.GONE);
+    }
 
-                    String authors = "";
-                    for(String author: book.getVolumeInfo().getAuthors()){
-                        if(authors == ""){
-                            authors = author;
-                        }
-                        else{
-                            authors = authors + "\n" + author;
-                        }
-
-                    }
-
-                    tvAuthors.setText(authors);
-                    tvDescription.setText(book.getVolumeInfo().getDescription());
-
-                    if(book.getVolumeInfo().getImageLinks() != null){
-                        Picasso.get().load(book.getVolumeInfo().getImageLinks().getSmallThumbnail()).into(bookCover);
-                    }
-                    else{
-                        bookCover.setImageResource(R.mipmap.ic_launcher);
-                    }
-
-                    //Toast.makeText(BookDetailsActivity.this, "We got Book: " + book.getId(), Toast.LENGTH_SHORT).show();
-                    progressBar.setVisibility(View.GONE);
-                }
-                else {
-                    // error case
-                    switch (response.code()) {
-                        case 404:
-                            Toast.makeText(BookDetailsActivity.this, "not found", Toast.LENGTH_SHORT).show();
-                            break;
-                        case 500:
-                            Toast.makeText(BookDetailsActivity.this, "server broken", Toast.LENGTH_SHORT).show();
-                            break;
-                        default:
-                            Toast.makeText(BookDetailsActivity.this, "unknown error", Toast.LENGTH_SHORT).show();
-                            break;
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Book> call, Throwable t) {
-                Toast.makeText(BookDetailsActivity.this, "Network failure. Inform the user and possibly retry", Toast.LENGTH_SHORT).show();
-            }
-        });*/
+    @Override
+    public void getBookDetailsSuccess(Book book) {
+        tvPublishedDate.setText(book.getVolumeInfo().getPublishedDate());
+        tvAuthors.setText(book.getVolumeInfo().getAuthorsString());
+        tvDescription.setText(book.getVolumeInfo().getDescription());
+        if(book.getVolumeInfo().getImageLinks() != null){
+            Picasso.get().load(book.getVolumeInfo().getImageLinks().getSmallThumbnail()).into(bookCover);
+        }
+        else{
+            bookCover.setImageResource(R.mipmap.ic_launcher);
+        }
 
     }
 }

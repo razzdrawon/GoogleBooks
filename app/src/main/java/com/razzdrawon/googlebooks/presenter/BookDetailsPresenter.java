@@ -1,31 +1,30 @@
 package com.razzdrawon.googlebooks.presenter;
 
-import com.razzdrawon.googlebooks.model.BookResponse;
+import com.razzdrawon.googlebooks.model.Book;
 import com.razzdrawon.googlebooks.services.GoogleBooksService;
 import com.razzdrawon.googlebooks.services.RetrofitClient;
-import com.razzdrawon.googlebooks.view.MainActivityView;
+import com.razzdrawon.googlebooks.view.BookDetailsView;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class MainActivityPresenter {
-
-    private final MainActivityView view;
+public class BookDetailsPresenter {
+    private final BookDetailsView view;
     public GoogleBooksService service;
 
-    public MainActivityPresenter(MainActivityView view) {
+    public BookDetailsPresenter(BookDetailsView view) {
         this.view = view;
         service = RetrofitClient.getInstance().getService();
     }
 
-    public void getBoolList(String query, Integer startIndex, Integer maxResults) {
+    public void getBookDetails(String bookId) {
         view.showWait();
 
-        service.getBooks(query, startIndex, maxResults)
+        service.getBookById(bookId)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<BookResponse>() {
+                .subscribe(new Subscriber<Book>() {
                     @Override
                     public void onCompleted() {
 
@@ -38,9 +37,9 @@ public class MainActivityPresenter {
                     }
 
                     @Override
-                    public void onNext(BookResponse bookResponse) {
+                    public void onNext(Book book) {
                         view.removeWait();
-                        view.getBookResponseSuccess(bookResponse);
+                        view.getBookDetailsSuccess(book);
                     }
                 });
     }

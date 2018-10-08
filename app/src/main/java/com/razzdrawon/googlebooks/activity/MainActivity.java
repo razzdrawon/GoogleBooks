@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityView 
     @Override
     public void getBookResponseSuccess(BookResponse bookListResponse) {
         mAdapter.updateBooks(bookListResponse.getItems());
+        failureMessage.setVisibility(View.GONE);
     }
 
     public class MyOnScrollListener extends RecyclerView.OnScrollListener {
