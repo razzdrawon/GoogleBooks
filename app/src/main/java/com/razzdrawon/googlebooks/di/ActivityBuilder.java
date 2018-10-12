@@ -6,8 +6,9 @@ import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
-public abstract class ActivityModule {
+public abstract class ActivityBuilder {
+
     @ContributesAndroidInjector
-    public abstract MainActivity contributesMainActivity ();
+    abstract MainActivity bindMainActivity();
 
 }

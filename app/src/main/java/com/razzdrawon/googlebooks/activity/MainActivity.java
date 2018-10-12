@@ -1,7 +1,6 @@
 package com.razzdrawon.googlebooks.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -17,17 +16,21 @@ import com.razzdrawon.googlebooks.view.MainActivityView;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity implements MainActivityView {
+import dagger.android.support.DaggerAppCompatActivity;
+
+public class MainActivity extends DaggerAppCompatActivity implements MainActivityView {
 
     public static final Integer COLUMNS_NBR = 1;
     @Inject
     public GoogleBooksService service;
+
     //Endless book list
     ProgressBar progressBar;
     Boolean isScrolling = false;
     int currentItems, totalItems, scrollOutItems;
     TextView failureMessage;
     MainActivityPresenter presenter;
+
     //RecyclerViewVars
     private RecyclerView mRecyclerView;
     private BookItemAdapter mAdapter;
@@ -39,8 +42,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityView 
         setContentView(R.layout.activity_main);
 
         getViews();
-
-
 
         presenter = new MainActivityPresenter(this, service);
         presenter.getBoolList("android", 0, 15);
