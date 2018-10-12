@@ -1,6 +1,7 @@
 package com.razzdrawon.googlebooks.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,9 +17,9 @@ import com.razzdrawon.googlebooks.view.MainActivityView;
 
 import javax.inject.Inject;
 
-import dagger.android.support.DaggerAppCompatActivity;
+import dagger.android.AndroidInjection;
 
-public class MainActivity extends DaggerAppCompatActivity implements MainActivityView {
+public class MainActivity extends AppCompatActivity implements MainActivityView {
 
     public static final Integer COLUMNS_NBR = 1;
     @Inject
@@ -38,6 +39,7 @@ public class MainActivity extends DaggerAppCompatActivity implements MainActivit
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

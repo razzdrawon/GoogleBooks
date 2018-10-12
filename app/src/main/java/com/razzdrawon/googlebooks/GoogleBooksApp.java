@@ -1,26 +1,35 @@
 package com.razzdrawon.googlebooks;
 
-import com.razzdrawon.googlebooks.di.AppComponent;
+import android.app.Activity;
+import android.app.Application;
+
 import com.razzdrawon.googlebooks.di.DaggerAppComponent;
 
-import dagger.android.AndroidInjector;
-import dagger.android.DaggerApplication;
+import javax.inject.Inject;
+
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
 
 
-public class GoogleBooksApp extends DaggerApplication {
+public class GoogleBooksApp extends Application implements HasActivityInjector {
+
+    @Inject
+    DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        DaggerAppComponent
+                .builder()
+                .application(this)
+                .build()
+                .inject(this);
+
     }
 
     @Override
-    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-        AppComponent component = DaggerAppComponent
-                .builder()
-                .application(this)
-                .build();
-        return component;
+    public DispatchingAndroidInjector<Activity> activityInjector() {
+        return activityDispatchingAndroidInjector;
     }
 
 }

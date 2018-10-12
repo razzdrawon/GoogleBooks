@@ -15,7 +15,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    GoogleBooksApp provideContext(Application application) {
+    Context provideContext(Application application) {
         return (GoogleBooksApp) application;
     }
 }
