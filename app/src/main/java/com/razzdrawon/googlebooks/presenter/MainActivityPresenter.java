@@ -3,7 +3,6 @@ package com.razzdrawon.googlebooks.presenter;
 import com.razzdrawon.googlebooks.model.BookResponse;
 import com.razzdrawon.googlebooks.services.GoogleBooksService;
 import com.razzdrawon.googlebooks.view.MainActivityView;
-
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -27,7 +26,6 @@ public class MainActivityPresenter {
                 .subscribe(new Subscriber<BookResponse>() {
                     @Override
                     public void onCompleted() {
-
                     }
 
                     @Override

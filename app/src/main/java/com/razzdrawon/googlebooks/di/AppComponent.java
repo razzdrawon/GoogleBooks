@@ -1,10 +1,7 @@
 package com.razzdrawon.googlebooks.di;
 
 import android.app.Application;
-
 import com.razzdrawon.googlebooks.GoogleBooksApp;
-import com.razzdrawon.googlebooks.activity.MainActivityModule;
-
 import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjector;
@@ -21,5 +18,4 @@ public interface AppComponent extends AndroidInjector<GoogleBooksApp> {
         @BindsInstance Builder application(Application application);
         AppComponent build();
     }
-
 }

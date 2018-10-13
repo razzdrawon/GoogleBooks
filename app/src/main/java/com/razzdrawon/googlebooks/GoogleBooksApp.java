@@ -2,10 +2,8 @@ package com.razzdrawon.googlebooks;
 
 import com.razzdrawon.googlebooks.di.AppComponent;
 import com.razzdrawon.googlebooks.di.DaggerAppComponent;
-
 import dagger.android.AndroidInjector;
 import dagger.android.DaggerApplication;
-
 
 public class GoogleBooksApp extends DaggerApplication {
 

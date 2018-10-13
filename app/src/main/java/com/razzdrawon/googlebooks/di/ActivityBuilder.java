@@ -3,7 +3,6 @@ package com.razzdrawon.googlebooks.di;
 import com.razzdrawon.googlebooks.activity.BookDetailsActivity;
 import com.razzdrawon.googlebooks.activity.MainActivity;
 import com.razzdrawon.googlebooks.activity.MainActivityModule;
-
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 

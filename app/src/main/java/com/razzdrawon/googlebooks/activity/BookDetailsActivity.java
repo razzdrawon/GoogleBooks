@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.razzdrawon.googlebooks.R;
 import com.razzdrawon.googlebooks.adapter.BookItemAdapter;
 import com.razzdrawon.googlebooks.model.Book;
@@ -32,7 +31,6 @@ public class BookDetailsActivity extends DaggerAppCompatActivity implements Book
     TextView failureMessage;
     LinearLayout bookDetailsLayout;
     ProgressBar progressBar;
-
     String bookId;
     BookDetailsPresenter presenter;
 

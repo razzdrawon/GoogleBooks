@@ -11,11 +11,8 @@ import com.razzdrawon.googlebooks.R;
 import com.razzdrawon.googlebooks.adapter.BookItemAdapter;
 import com.razzdrawon.googlebooks.model.BookResponse;
 import com.razzdrawon.googlebooks.presenter.MainActivityPresenter;
-import com.razzdrawon.googlebooks.services.GoogleBooksService;
 import com.razzdrawon.googlebooks.view.MainActivityView;
-
 import javax.inject.Inject;
-
 import dagger.android.support.DaggerAppCompatActivity;
 
 public class MainActivity extends DaggerAppCompatActivity implements MainActivityView {
@@ -43,7 +40,6 @@ public class MainActivity extends DaggerAppCompatActivity implements MainActivit
 
         getViews();
 
-        //presenter = new MainActivityPresenter(this, service);
         presenter.getBoolList("android", 0, 15);
 
         mAdapter = new BookItemAdapter();

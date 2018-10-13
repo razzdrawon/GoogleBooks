@@ -1,10 +1,8 @@
 package com.razzdrawon.googlebooks.activity;
 
-import com.razzdrawon.googlebooks.di.NetworkModule;
 import com.razzdrawon.googlebooks.presenter.MainActivityPresenter;
 import com.razzdrawon.googlebooks.services.GoogleBooksService;
 import com.razzdrawon.googlebooks.view.MainActivityView;
-
 import dagger.Module;
 import dagger.Provides;
 
