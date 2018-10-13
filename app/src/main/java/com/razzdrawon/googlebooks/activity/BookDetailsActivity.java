@@ -1,7 +1,6 @@
 package com.razzdrawon.googlebooks.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,10 +12,18 @@ import com.razzdrawon.googlebooks.R;
 import com.razzdrawon.googlebooks.adapter.BookItemAdapter;
 import com.razzdrawon.googlebooks.model.Book;
 import com.razzdrawon.googlebooks.presenter.BookDetailsPresenter;
+import com.razzdrawon.googlebooks.services.GoogleBooksService;
 import com.razzdrawon.googlebooks.view.BookDetailsView;
 import com.squareup.picasso.Picasso;
 
-public class BookDetailsActivity extends AppCompatActivity implements BookDetailsView {
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerAppCompatActivity;
+
+public class BookDetailsActivity extends DaggerAppCompatActivity implements BookDetailsView {
+
+    @Inject
+    public GoogleBooksService service;
 
     ImageView bookCover;
     TextView tvAuthors;
@@ -39,7 +46,7 @@ public class BookDetailsActivity extends AppCompatActivity implements BookDetail
         Intent intent = getIntent();
         bookId = intent.getStringExtra(BookItemAdapter.BOOK_ID);
 
-        presenter = new BookDetailsPresenter(this);
+        presenter = new BookDetailsPresenter(this, service);
         presenter.getBookDetails(bookId);
 
     }

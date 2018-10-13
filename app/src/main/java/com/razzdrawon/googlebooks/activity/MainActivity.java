@@ -21,6 +21,7 @@ import dagger.android.support.DaggerAppCompatActivity;
 public class MainActivity extends DaggerAppCompatActivity implements MainActivityView {
 
     public static final Integer COLUMNS_NBR = 1;
+
     @Inject
     public GoogleBooksService service;
 

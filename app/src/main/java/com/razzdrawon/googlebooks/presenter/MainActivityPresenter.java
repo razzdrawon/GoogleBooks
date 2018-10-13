@@ -1,13 +1,8 @@
 package com.razzdrawon.googlebooks.presenter;
 
-import android.content.Context;
-
 import com.razzdrawon.googlebooks.model.BookResponse;
 import com.razzdrawon.googlebooks.services.GoogleBooksService;
-import com.razzdrawon.googlebooks.services.RetrofitClient;
 import com.razzdrawon.googlebooks.view.MainActivityView;
-
-import javax.inject.Inject;
 
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
