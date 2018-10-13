@@ -10,9 +10,8 @@ import rx.schedulers.Schedulers;
 
 public class MainActivityPresenter {
 
-    private final MainActivityView view;
-
-    public GoogleBooksService service;
+    MainActivityView view;
+    GoogleBooksService service;
 
     public MainActivityPresenter(MainActivityView view, GoogleBooksService service) {
         this.view = view;

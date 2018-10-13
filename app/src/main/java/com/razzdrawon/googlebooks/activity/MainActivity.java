@@ -23,14 +23,13 @@ public class MainActivity extends DaggerAppCompatActivity implements MainActivit
     public static final Integer COLUMNS_NBR = 1;
 
     @Inject
-    public GoogleBooksService service;
+    MainActivityPresenter presenter;
 
     //Endless book list
     ProgressBar progressBar;
     Boolean isScrolling = false;
     int currentItems, totalItems, scrollOutItems;
     TextView failureMessage;
-    MainActivityPresenter presenter;
 
     //RecyclerViewVars
     private RecyclerView mRecyclerView;
@@ -44,7 +43,7 @@ public class MainActivity extends DaggerAppCompatActivity implements MainActivit
 
         getViews();
 
-        presenter = new MainActivityPresenter(this, service);
+        //presenter = new MainActivityPresenter(this, service);
         presenter.getBoolList("android", 0, 15);
 
         mAdapter = new BookItemAdapter();
