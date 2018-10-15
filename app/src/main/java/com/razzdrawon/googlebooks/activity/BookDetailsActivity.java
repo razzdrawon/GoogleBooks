@@ -11,18 +11,15 @@ import com.razzdrawon.googlebooks.R;
 import com.razzdrawon.googlebooks.adapter.BookItemAdapter;
 import com.razzdrawon.googlebooks.model.Book;
 import com.razzdrawon.googlebooks.presenter.BookDetailsPresenter;
-import com.razzdrawon.googlebooks.services.GoogleBooksService;
 import com.razzdrawon.googlebooks.view.BookDetailsView;
 import com.squareup.picasso.Picasso;
-
 import javax.inject.Inject;
-
 import dagger.android.support.DaggerAppCompatActivity;
 
 public class BookDetailsActivity extends DaggerAppCompatActivity implements BookDetailsView {
 
     @Inject
-    public GoogleBooksService service;
+    BookDetailsPresenter presenter;
 
     ImageView bookCover;
     TextView tvAuthors;
@@ -32,7 +29,6 @@ public class BookDetailsActivity extends DaggerAppCompatActivity implements Book
     LinearLayout bookDetailsLayout;
     ProgressBar progressBar;
     String bookId;
-    BookDetailsPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,20 +39,15 @@ public class BookDetailsActivity extends DaggerAppCompatActivity implements Book
 
         Intent intent = getIntent();
         bookId = intent.getStringExtra(BookItemAdapter.BOOK_ID);
-
-        presenter = new BookDetailsPresenter(this, service);
         presenter.getBookDetails(bookId);
-
     }
 
     private void getViews() {
         progressBar = (ProgressBar) findViewById(R.id.progressDetails);
-
         bookCover = findViewById(R.id.imgBookCover);
         tvAuthors = findViewById(R.id.tvAuthors);
         tvDescription = findViewById(R.id.tvDescription);
         tvPublishedDate = findViewById(R.id.tvPublishDate);
-
         failureMessage = (TextView) findViewById(R.id.failure_book_message);
         bookDetailsLayout = (LinearLayout) findViewById(R.id.book_details_layout);
     }
