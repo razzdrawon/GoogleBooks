@@ -1,6 +1,7 @@
 package com.razzdrawon.googlebooks.services;
 
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
@@ -26,8 +27,9 @@ public class RetrofitClient {
 
     private void buildRetrofit(String baseUrl) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(baseUrl)
                 .build();;
 
         this.service = retrofit.create(GoogleBooksService.class);

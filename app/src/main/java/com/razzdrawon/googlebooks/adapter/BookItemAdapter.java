@@ -8,12 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.razzdrawon.googlebooks.R;
 import com.razzdrawon.googlebooks.activity.BookDetailsActivity;
 import com.razzdrawon.googlebooks.model.Book;
 import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
 import java.util.List;
 

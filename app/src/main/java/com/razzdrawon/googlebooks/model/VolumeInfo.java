@@ -46,6 +46,20 @@ public class VolumeInfo {
         return authors;
     }
 
+    public String getAuthorsString() {
+        String authors = "";
+        for(String author: getAuthors()){
+            if(authors == ""){
+                authors = author;
+            }
+            else{
+                authors = authors + "\n" + author;
+            }
+
+        }
+        return authors;
+    }
+
     public void setAuthors(List<String> authors) {
         this.authors = authors;
     }
