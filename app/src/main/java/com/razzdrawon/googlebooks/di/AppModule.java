@@ -2,11 +2,8 @@ package com.razzdrawon.googlebooks.di;
 
 import android.app.Application;
 import android.content.Context;
-
 import com.razzdrawon.googlebooks.GoogleBooksApp;
-
 import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 

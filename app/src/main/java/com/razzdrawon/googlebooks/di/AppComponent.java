@@ -1,9 +1,7 @@
 package com.razzdrawon.googlebooks.di;
 
 import android.app.Application;
-
 import com.razzdrawon.googlebooks.GoogleBooksApp;
-
 import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjector;

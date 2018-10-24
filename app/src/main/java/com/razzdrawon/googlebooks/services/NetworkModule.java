@@ -1,6 +1,4 @@
-package com.razzdrawon.googlebooks.di;
-
-import com.razzdrawon.googlebooks.services.GoogleBooksService;
+package com.razzdrawon.googlebooks.services;
 
 import dagger.Module;
 import dagger.Provides;

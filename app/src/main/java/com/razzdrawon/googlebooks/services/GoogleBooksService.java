@@ -2,7 +2,6 @@ package com.razzdrawon.googlebooks.services;
 
 import com.razzdrawon.googlebooks.model.Book;
 import com.razzdrawon.googlebooks.model.BookResponse;
-
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;

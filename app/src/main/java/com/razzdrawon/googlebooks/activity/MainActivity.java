@@ -1,7 +1,6 @@
 package com.razzdrawon.googlebooks.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -12,25 +11,22 @@ import com.razzdrawon.googlebooks.R;
 import com.razzdrawon.googlebooks.adapter.BookItemAdapter;
 import com.razzdrawon.googlebooks.model.BookResponse;
 import com.razzdrawon.googlebooks.presenter.MainActivityPresenter;
-import com.razzdrawon.googlebooks.services.GoogleBooksService;
 import com.razzdrawon.googlebooks.view.MainActivityView;
-
 import javax.inject.Inject;
+import dagger.android.support.DaggerAppCompatActivity;
 
-import dagger.android.AndroidInjection;
-
-public class MainActivity extends AppCompatActivity implements MainActivityView {
+public class MainActivity extends DaggerAppCompatActivity implements MainActivityView {
 
     public static final Integer COLUMNS_NBR = 1;
+
     @Inject
-    public GoogleBooksService service;
+    MainActivityPresenter presenter;
 
     //Endless book list
     ProgressBar progressBar;
     Boolean isScrolling = false;
     int currentItems, totalItems, scrollOutItems;
     TextView failureMessage;
-    MainActivityPresenter presenter;
 
     //RecyclerViewVars
     private RecyclerView mRecyclerView;
@@ -39,13 +35,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityView 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         getViews();
 
-        presenter = new MainActivityPresenter(this, service);
         presenter.getBoolList("android", 0, 15);
 
         mAdapter = new BookItemAdapter();
